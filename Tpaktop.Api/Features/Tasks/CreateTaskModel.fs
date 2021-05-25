@@ -7,9 +7,10 @@ type CreatedBy = CreatedBy of string
 type CreateTaskValidationFailure =
     | NameIsInvalid of string
     | CreatedByIsInvalid of string
+    | EmptyModel of string
 
 let (|InvalidTaskName|_|) (name:string) =
-    if name.Length < 2 then Some "Name should be at least 3 characters long" else None 
+    if name = null || name.Length < 2 then Some "Name should be at least 3 characters long" else None 
 
 let (|InvalidCreatedBy|_|) (createdBy: string) =
     match createdBy with
@@ -37,17 +38,21 @@ type CreateTaskModelValidated =
       AssignedTo: AssignedTo
       CreatedBy: CreatedBy }
     
-let create (input: CreateTaskModelUnvalidated) =
-    let validatedName = input.Name |> tryGetName
+let createTask (input: CreateTaskModelUnvalidated) =
+    let inputOption = if(box input = null) then None else Some input
     
-    let validatedCreatedBy = input.CreatedBy |> tryGetCreatedBy
-    
-    let result =
-        match validatedName, validatedCreatedBy with
-            | Ok n, Ok c -> Ok { Name = n; AssignedTo = AssignedTo input.AssignedTo; CreatedBy = c }
-            | Error ex, Ok _ -> Error ex
-            | Ok _, Error ex -> Error ex
-            | Error ex1, Error ex2 -> Error (List.concat [ex1; ex2])
-            
-    result            
-    
+    match inputOption with
+        | None -> Error [ EmptyModel "Model is empty" ]
+        | Some i -> 
+            let validatedName = i.Name |> tryGetName
+
+            let validatedCreatedBy = i.CreatedBy |> tryGetCreatedBy
+
+            let result =
+                match validatedName, validatedCreatedBy with
+                    | Ok n, Ok c -> Ok { Name = n; AssignedTo = AssignedTo input.AssignedTo; CreatedBy = c }
+                    | Error ex, Ok _ -> Error ex
+                    | Ok _, Error ex -> Error ex
+                    | Error ex1, Error ex2 -> Error (List.concat [ex1; ex2])
+                    
+            result

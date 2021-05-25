@@ -1,6 +1,7 @@
 ﻿module Tpaktop.Api
 
 open System
+open CreateTaskModel
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Cors.Infrastructure
 open Microsoft.AspNetCore.Hosting
@@ -10,11 +11,21 @@ open Giraffe
 
 open Serilog
 open Serilog.Events
+open CreateTaskHandler
 
 let webApp =
     choose [
-        route "/ping"   >=> text "pong"
-        route "/"       >=> htmlFile "/pages/index.html" ]
+        subRouteCi "/task"
+            (choose [
+                POST >=> choose [
+                    route "" >=> bindJson<CreateTaskModelUnvalidated> createTaskHandler
+                ]
+        ])
+    
+    
+        // If none of the routes matched then return a 404
+        RequestErrors.NOT_FOUND "Not Found"
+    ]
 
 open Microsoft.Extensions.Logging
 let errorHandler (ex : Exception) (logger : ILogger) =
