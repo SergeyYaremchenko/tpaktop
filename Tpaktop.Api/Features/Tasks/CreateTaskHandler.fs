@@ -8,3 +8,5 @@ let createTaskHandler (unvalidatedTask: CreateTaskModelUnvalidated): HttpHandler
         | Ok verifiedTask -> Successful.OK verifiedTask
         | Error e -> RequestErrors.BAD_REQUEST $"{e}"
         
+let createTask task =
+    
