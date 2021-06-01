@@ -8,13 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Program.fs" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Content Include=".dockerignore" />
       <Content Include="Dockerfile" />
       <Compile Include="Migrations\2021_31_05_Add_Tasks.fs" />
+      <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>

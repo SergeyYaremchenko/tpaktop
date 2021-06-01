@@ -11,6 +11,7 @@ type AddTasks() =
             .WithColumn("Id").AsInt64().PrimaryKey().Identity()
             .WithColumn("AssignedTo").AsString()
             .WithColumn("CreatedBy").AsString()
+            .WithColumn("CreatedAt").AsDateTime()
             |> ignore
     
     override m.Down() =

@@ -5,7 +5,7 @@ open Microsoft.Extensions.DependencyInjection
 
 open System.IO
 
-let sqliteConString = "Data Source=" + Path.Join(__SOURCE_DIRECTORY__, "../data/data.db")
+let sqliteConString = "Data Source=../data/data.db"
 
 let CreateServices(conString: string) =
     let sc = new ServiceCollection()

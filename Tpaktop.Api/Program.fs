@@ -1,7 +1,7 @@
 ﻿module Tpaktop.Api
 
 open System
-open CreateTaskModel
+
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Cors.Infrastructure
 open Microsoft.AspNetCore.Hosting
@@ -11,7 +11,9 @@ open Giraffe
 
 open Serilog
 open Serilog.Events
-open CreateTaskHandler
+
+open CreateTask.Model
+open CreateTask.Handler
 
 let webApp =
     choose [

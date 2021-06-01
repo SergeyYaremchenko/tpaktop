@@ -1,7 +1,7 @@
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
-
+data/*.db
 
 # Created by https://www.toptal.com/developers/gitignore/api/csharp,aspnetcore,rider,dotnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=csharp,aspnetcore,rider,dotnetcore

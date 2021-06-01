@@ -1,8 +1,7 @@
-module CreateTaskModel
+module CreateTask.Model
 
-type TaskName = TaskName of string
-type AssignedTo = AssignedTo of string option
-type CreatedBy = CreatedBy of string
+open Tpaktop 
+open CreateTask.Types
 
 type CreateTaskValidationFailure =
     | NameIsInvalid of string
@@ -32,13 +31,13 @@ type CreateTaskModelUnvalidated =
     { Name: string
       AssignedTo: string option
       CreatedBy: string }
-    
+
 type CreateTaskModelValidated =
     { Name: TaskName
       AssignedTo: AssignedTo
       CreatedBy: CreatedBy }
     
-let createTask (input: CreateTaskModelUnvalidated) =
+let createValidatedTask (input: CreateTaskModelUnvalidated) =
     let inputOption = if(box input = null) then None else Some input
     
     match inputOption with

@@ -1,4 +1,4 @@
-module TryParser 
+module Tpaktop.TryParser 
     // convenient, functional TryParse wrappers returning option<'a>
     let tryParseWith (tryParseFunc: string -> bool * _) = tryParseFunc >> function
         | true, v    -> Some v
